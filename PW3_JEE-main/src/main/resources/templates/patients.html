@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    layout:decorate="navBar">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css">
+</head>
+<body>
+    <div class="p-3" layout:fragment="content1">
+        <div class="card">
+            <div class="card-header">
+                Patients list
+            </div>
+
+            <div class="card-body">
+                <form method="get" th:action="@{/user/index}">
+                    <div>
+                        <label>Keyword</label>
+                        <input class="form-control m-2" type="text" name="keyword">
+                        <button type="submit" class="btn btn-info">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+                <table class="table table-striped">
+                    <tr>
+                        <th>ID</th>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Birthday</th>
+                        <th>Sick</th>
+                        <th>Score</th>
+                    </tr>
+
+                    <tr th:each="p:${listP}">
+                        <td th:text="${p.getId()}"></td>
+                        <td th:text="${p.getFn()}"></td>
+                        <td th:text="${p.getLn()}"></td>
+                        <td th:text="${p.getBirthday()}"></td>
+                        <td th:text="${p.sick}"></td>
+                        <td th:text="${p.getScore()}"></td>
+                        <td sec:authorize="hasRole('ADMIN')">
+                            <a
+                                    onclick="return confirm('R u really want to delete this record ?')"
+                                    class="btn btn-danger"
+                                    th:href="@{/admin/delete(id=${p.id}, keyword=${keyword}, page=${currentPage})}"
+                            ><i class="bi bi-trash"></i></a>
+                        </td>
+                        <td>
+                            <a
+                                    class="btn btn-info"
+                                    th:href="@{/admin/edit(id=${p.id})}"
+                            ><i class="bi bi-pen"></i></a>
+                        </td>
+                    </tr>
+                </table>
+
+                <ul class="nav nav-pills m-2">
+                    <li class="p-1" th:each="page, status:${pages}">
+                        <a class="btn btn-outline-info"
+                           th:class="${(currentPage == status.index)? 'btn btn-info' : 'btn btn-outline-info'}"
+                           th:text="${status.index}"
+                           th:href="@{/user/index(page=${status.index}, keyword=${keyword})}"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

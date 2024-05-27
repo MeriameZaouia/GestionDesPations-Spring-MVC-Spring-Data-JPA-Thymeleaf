@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="navBar">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Patient</title>
+    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+</head>
+<body>
+<div layout:fragment="content1" class="col-md-6 offset-3">
+    <form method="post" th:action="@{edit}">
+        <div class="form-control m-2">
+            <label class="form-label">ID :</label>
+            <input class="form-control" type="text" name="id" th:value="${patient.id}" disabled>
+        </div>
+        <div class="form-control m-2">
+            <label class="form-label">First name :</label>
+            <input class="form-control" type="text" placeholder="Type your first name ..." name="fn" th:value="${patient.fn}">
+            <span class="text-danger" th:errors="${patient.fn}"></span>
+        </div>
+        <div class="form-control m-2">
+            <label class="form-label">Last name :</label>
+            <input class="form-control" type="text" placeholder="Type your last name ..." name="ln" th:value="${patient.ln}">
+            <span class="text-danger" th:errors="${patient.ln}"></span>
+        </div>
+        <div class="form-control m-2">
+            <label class="form-label">Birthday :</label>
+            <input class="form-control" type="date" name="birthday" th:value="${patient.birthday}">
+            <span></span>
+        </div>
+        <div class="form-control m-2">
+            <label class="form-label">Sick :</label>
+            <input type="checkbox" name="sick" th:checked="${patient.sick}">
+            <span class="text-danger bg-danger" th:errors="${patient.sick}"></span>
+        </div>
+        <div class="form-control m-2">
+            <label class="form-label">Score :</label>
+            <input class="form-control" type="text" name="score" th:value="${patient.score}">
+            <span class="text-danger" th:errors="${patient.score}"></span>
+        </div>
+        <button class="btn btn-primary m-2 w-100">Edit</button>
+    </form>
+</div>
+
+</body>
+</html>
